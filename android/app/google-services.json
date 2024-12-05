@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "344696358451",
+    "project_id": "pm2-catatankeuangan",
+    "storage_bucket": "pm2-catatankeuangan.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344696358451:android:9aae51e860823a7b1e4546",
+        "android_client_info": {
+          "package_name": "com.exa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmSReHkXAGg2nSOajg0OXyEFedj0f74fE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344696358451:android:d537142eee99222e1e4546",
+        "android_client_info": {
+          "package_name": "com.example"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmSReHkXAGg2nSOajg0OXyEFedj0f74fE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
