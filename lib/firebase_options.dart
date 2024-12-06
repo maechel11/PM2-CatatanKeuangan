@@ -48,4 +48,22 @@ class DefaultFirebaseOptions {
         );
     }
   }
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCYUhZl1H0-XKFnmY7UMYfiQAyHe8zyy8U',
+    appId: '1:233845021787:web:76c32bf07effea86d2f37e',
+    messagingSenderId: '233845021787',
+    projectId: 'project-catatan-keuangan-5aef4',
+    authDomain: 'project-catatan-keuangan-5aef4.firebaseapp.com',
+    storageBucket: 'project-catatan-keuangan-5aef4.firebasestorage.app',
+    measurementId: 'G-FJGMRW9SKM',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyDSJWBME_EJZHgwApxgqdU_1Mzm7Q1edDM',
+    appId: '1:233845021787:android:867f4d1506086121d2f37e',
+    messagingSenderId: '233845021787',
+    projectId: 'project-catatan-keuangan-5aef4',
+    storageBucket: 'project-catatan-keuangan-5aef4.firebasestorage.app',
+  );
 }

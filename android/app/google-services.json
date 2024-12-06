@@ -1,40 +1,21 @@
 {
   "project_info": {
-    "project_number": "344696358451",
-    "project_id": "pm2-catatankeuangan",
-    "storage_bucket": "pm2-catatankeuangan.firebasestorage.app"
+    "project_number": "233845021787",
+    "project_id": "project-catatan-keuangan-5aef4",
+    "storage_bucket": "project-catatan-keuangan-5aef4.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:344696358451:android:9aae51e860823a7b1e4546",
+        "mobilesdk_app_id": "1:233845021787:android:867f4d1506086121d2f37e",
         "android_client_info": {
-          "package_name": "com.exa"
+          "package_name": "com.example.app"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAmSReHkXAGg2nSOajg0OXyEFedj0f74fE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:344696358451:android:d537142eee99222e1e4546",
-        "android_client_info": {
-          "package_name": "com.example"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAmSReHkXAGg2nSOajg0OXyEFedj0f74fE"
+          "current_key": "AIzaSyDSJWBME_EJZHgwApxgqdU_1Mzm7Q1edDM"
         }
       ],
       "services": {
