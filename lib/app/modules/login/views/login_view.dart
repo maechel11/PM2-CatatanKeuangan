@@ -123,7 +123,7 @@ class LoginView extends GetView<LoginController> {
                 Text("Belum Punya Akun ?"),
                 TextButton(
                   onPressed: () {
-                    // Get.toNamed(Routes.SIGNUP);
+                    Get.toNamed(Routes.REGISTER);
                   },
                   child: Text("Daftar Disini"),
                 ),

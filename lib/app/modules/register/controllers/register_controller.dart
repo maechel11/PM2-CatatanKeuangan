@@ -1,23 +1,20 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
-  //TODO: Implement RegisterController
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  var isPasswordHidden = true.obs;
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  final cEmail = TextEditingController();
+  final cPassword = TextEditingController();
+  final cUsername = TextEditingController();
+  final cConfirmPassword = TextEditingController();
 
   @override
   void onClose() {
+    cEmail.dispose();
+    cPassword.dispose();
+    cUsername.dispose();
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
