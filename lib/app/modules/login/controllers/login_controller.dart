@@ -1,23 +1,17 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
+  
+  var isPasswordHidden = true.obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  final cEmail = TextEditingController();
+  final cPassword = TextEditingController();
 
   @override
   void onClose() {
+    cEmail.dispose();
+    cPassword.dispose();
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
