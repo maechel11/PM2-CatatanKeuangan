@@ -80,6 +80,27 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                     const Divider(),
                     ListTile(
+                      title: const Text('Ubah Password'),
+                      onTap: () {
+                        // Implementasi navigasi ke halaman Ubah Password
+                      },
+                    ),
+                    const Divider(),
+                    ListTile(
+                      title: const Text('Notifikasi'),
+                      onTap: () {
+                        // Implementasi navigasi ke halaman Notifikasi
+                      },
+                    ),
+                    const Divider(),
+                    ListTile(
+                      title: const Text('Bantuan'),
+                      onTap: () {
+                        // Implementasi navigasi ke halaman Bantuan
+                      },
+                    ),
+                    const Divider(),
+                    ListTile(
                       title: const Text('Tentang kami'),
                       onTap: () {
                         // Implementasi navigasi ke halaman Tentang Kami
