@@ -6,11 +6,7 @@ import 'package:myapp/app/controllers/auth_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  
-  
-
   final cAuth = Get.find<AuthController>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -35,31 +31,50 @@ class HomeView extends GetView<HomeController> {
                       ),
                       Text(
                         'CekSAKU',
-                        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage('logo.png'),
-                    radius: 24,
-                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed('/profile');
+                    },
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.orange,
+                          width: 2.0,
+                        ),
+                      ),
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('assets/logo.png'),
+                        radius: 24,
+                      ),
+                    ),
+                  )
                 ],
               ),
               SizedBox(height: 20),
 
               // Pilih Bulan Button
               ElevatedButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.filter_alt_outlined),
-              label: Text('Pilih Bulan'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                onPressed: () {},
+                icon: Icon(Icons.filter_alt_outlined),
+                label: Text('Pilih Bulan'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
-            ),
 
               SizedBox(height: 20),
 
@@ -98,11 +113,13 @@ class HomeView extends GetView<HomeController> {
                   children: [
                     Text(
                       'Rp.xxx.xxx.xxx',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     Divider(color: Colors.black),
-                    Text('Total', style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text('Total',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
