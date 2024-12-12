@@ -1,82 +1,89 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:myapp/app/controllers/auth_controller.dart';
-
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final cAuth = Get.find<AuthController>();
+  HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header Section
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Username',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                      Text(
-                        'CekSAKU',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed('/profile');
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.orange,
-                          width: 2.0,
-                        ),
-                      ),
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/logo.png'),
-                        radius: 24,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 20),
-
-              // Pilih Bulan Button
-              ElevatedButton.icon(
-                onPressed: () {},
-                icon: Icon(Icons.filter_alt_outlined),
-                label: Text('Pilih Bulan'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+      appBar: AppBar(
+        toolbarHeight: 80,
+        backgroundColor: Colors.yellow.shade100,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Username',
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                ),
+                Text(
+                  'CekSAKU',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            InkWell(
+              onTap: () {
+                Get.toNamed('/profile');
+              },
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 8.0), // Add padding here
+                  child: CircleAvatar(
+                    backgroundColor: Colors.yellow.shade100,
+                    backgroundImage: AssetImage('assets/logo.png'),
+                    radius: 36,
                   ),
                 ),
               ),
-
-              SizedBox(height: 20),
+            ),
+          ],
+        ),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 8.0, top: 4.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Filter Bulan
+              Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    // Handle button press here
+                  },
+                  icon: Icon(Icons.filter_list, color: Colors.black),
+                  label: Text(
+                    "Pilih Bulan",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 1.0), // Add spacing between filter and list
 
               // List of Transactions
               Expanded(
@@ -141,7 +148,7 @@ class HomeView extends GetView<HomeController> {
 class TransactionCard extends StatelessWidget {
   final int index;
 
-  TransactionCard({required this.index});
+  const TransactionCard({Key? key, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
