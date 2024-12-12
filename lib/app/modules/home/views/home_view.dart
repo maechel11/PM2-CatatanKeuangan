@@ -10,10 +10,19 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor:
+          Color.fromARGB(255, 255, 251, 218), // Changed background color
       appBar: AppBar(
         toolbarHeight: 80,
-        backgroundColor: Colors.yellow.shade100,
+        backgroundColor: const Color.fromARGB(255, 255, 251, 218),
+        elevation: 5, // Add shadow
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20), // Add circular border
+          ),
+        ),
+        shadowColor: const Color.fromARGB(255, 0, 0, 0).withOpacity(1),
+
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -44,8 +53,7 @@ class HomeView extends GetView<HomeController> {
                   shape: BoxShape.circle,
                 ),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 8.0), // Add padding here
+                  padding: const EdgeInsets.only(bottom: 8.0),
                   child: CircleAvatar(
                     backgroundColor: Colors.yellow.shade100,
                     backgroundImage: AssetImage('assets/logo.png'),
