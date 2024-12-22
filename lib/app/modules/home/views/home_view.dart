@@ -1,3 +1,5 @@
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:4223307933.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:1744329656.
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/app/controllers/auth_controller.dart';
@@ -93,28 +95,37 @@ class HomeView extends GetView<HomeController> {
               ),
               SizedBox(height: 1.0), // Add spacing between filter and list
 
-              // List of Transactions
+              // Container for List of Transactions and Add button
               Expanded(
                 child: ListView.builder(
-                  itemCount: 4,
+                  itemCount: 6, // Increased item count by 1 for add button
                   itemBuilder: (context, index) {
-                    return TransactionCard(index: index);
+                    if (index == 5) {
+                      // Last item is the add button
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: FloatingActionButton(
+                            onPressed: () {
+                              // Handle add button press
+                            },
+                            child: Icon(
+                              Icons.add,
+                              color: const Color.fromARGB(
+                                  255, 0, 0, 0), // Changed icon color
+                            ),
+                            backgroundColor:
+                                Colors.orange, // Changed button color
+                          ),
+                        ),
+                      );
+                    } else {
+                      return TransactionCard(index: index);
+                    }
                   },
                 ),
               ),
-
-              // Add Button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FloatingActionButton(
-                    onPressed: () {},
-                    backgroundColor: Colors.orange,
-                    child: Icon(Icons.add, color: Colors.black),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
 
               // Total Section
               Container(
@@ -158,10 +169,11 @@ class TransactionCard extends StatelessWidget {
 
   const TransactionCard({Key? key, required this.index}) : super(key: key);
 
+//buat kotak catatan
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       color: Colors.yellow.shade100,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
@@ -194,7 +206,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                   child: Text(
                     index.isEven ? 'Pemasukan' : 'Pengeluaran',
-                    style: TextStyle(fontSize: 12, color: Colors.white),
+                    style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                 ),
               ],
