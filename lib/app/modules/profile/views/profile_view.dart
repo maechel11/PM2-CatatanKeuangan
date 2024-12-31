@@ -1,6 +1,8 @@
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:2297630870.
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:3617287351.
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -146,7 +148,7 @@ class ProfileView extends GetView<ProfileController> {
                         style: TextStyle(color: Colors.red),
                       ),
                       onTap: () {
-                        // Implementasi tombol LogOut
+                        Get.toNamed('/login'); // Navigasi ke halaman login
                       },
                     ),
                   ],
