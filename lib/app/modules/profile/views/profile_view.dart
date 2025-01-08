@@ -77,14 +77,7 @@ class ProfileView extends GetView<ProfileController> {
                     ListTile(
                       title: const Text('Ubah Profile'),
                       onTap: () {
-                        // Implementasi navigasi ke halaman Ubah Profile
-                      },
-                    ),
-                    const Divider(),
-                    ListTile(
-                      title: const Text('Ubah Password'),
-                      onTap: () {
-                        // Implementasi navigasi ke halaman Ubah Password
+                        Get.toNamed('/ubah-profile');
                       },
                     ),
                     const Divider(),
@@ -98,7 +91,7 @@ class ProfileView extends GetView<ProfileController> {
                     ListTile(
                       title: const Text('Bantuan'),
                       onTap: () {
-                        // Implementasi navigasi ke halaman Bantuan
+                        Get.toNamed('/bantuan'); // Navigasi ke halaman bantuan
                       },
                     ),
                     const Divider(),
