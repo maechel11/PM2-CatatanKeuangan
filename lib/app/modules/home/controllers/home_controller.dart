@@ -1,23 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  // Menggunakan RxString agar bisa reaktif dan update UI ketika berubah
+  var username = ''.obs; // Username reaktif
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    _fetchUserData(); // Ambil data pengguna saat controller diinisialisasi
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  Future<void> _fetchUserData() async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        String uid = currentUser.uid;
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+        // Ambil data dari Firestore
+        DocumentSnapshot userDoc =
+            await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
-  void increment() => count.value++;
+        if (userDoc.exists) {
+          // Update nilai username secara reaktif
+          username.value = userDoc.get('username') ?? 'Nama tidak ditemukan';
+        } else {
+          print("User document tidak ditemukan.");
+        }
+      }
+    } catch (e) {
+      print("Error mengambil data pengguna: $e");
+    }
+  }
 }

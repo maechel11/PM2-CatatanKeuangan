@@ -2,11 +2,9 @@
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:1744329656.
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/app/controllers/auth_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  final cAuth = Get.find<AuthController>();
   HomeView({Key? key}) : super(key: key);
 
   @override
@@ -31,10 +29,10 @@ class HomeView extends GetView<HomeController> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Username',
+                  Obx(() => Text(
+                  controller.username.isEmpty ? 'Loading...' : controller.username.value,
                   style: TextStyle(color: Colors.black, fontSize: 20),
-                ),
+                )),
                 Text(
                   'CekSAKU',
                   style: TextStyle(
