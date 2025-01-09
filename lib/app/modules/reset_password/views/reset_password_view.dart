@@ -1,76 +1,92 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:myapp/app/controllers/auth_controller.dart';
-
 import '../controllers/reset_password_controller.dart';
 
 class ResetPasswordView extends GetView<ResetPasswordController> {
-  // const ResetPasswordView({super.key});
   final cAuth = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 251, 218),
       appBar: AppBar(
-        title: const Text('Reset Password'),
-        centerTitle: true,
+        title: const Text('Reset Password',style: TextStyle(
+        fontWeight: FontWeight.bold, 
+        ),
       ),
-
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 255, 251, 218),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: controller.cEmail,
-              decoration: InputDecoration(
-                labelText: "Enter Email",
+            const Text(
+              'Masukkan email Anda untuk mereset password',
+              style: TextStyle(
+                fontSize: 16,
+                // fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20), // Jarak antara teks dan container
+            Center(
+              child: Container(
+                padding: const EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 255, 187, 112),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: controller.cEmail,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: "Email",
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            cAuth.resetPassword(
+                              controller.cEmail.text,
+                            );
+                          },
+                          child: const Text('Reset Password'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(255, 237, 148, 85),
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                            elevation: 6,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                cAuth.resetPassword(
-                  controller.cEmail.text,
-                );
-              },
-              child: const Text('Reset Password'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 34, 57, 150),
-                foregroundColor: Colors.white,
-              ),
-            ),
-
-          
-
-            // SizedBox(
-            // height: 10,
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Text("Sudah Ingat Passwormu ?"),
-            //     TextButton(
-            //       onPressed: () {
-            //         Get.back();
-            //       },
-            //       child: Text("Back"),
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ),
-
-      // body: const Center(
-      //   child: Text(
-      //     'ResetPasswordView is working',
-      //     style: TextStyle(fontSize: 20),
-      //   ),
-      // ),
-
-
     );
   }
 }
