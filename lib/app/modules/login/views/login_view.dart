@@ -91,6 +91,7 @@ class LoginView extends GetView<LoginController> {
                 child: Text("Lupa Password?"),
                 onPressed: () {
                   // Get.offAllNamed(Routes.RESET_PASSWORD);
+                  Get.toNamed(Routes.RESET_PASSWORD);
                 },
               ),
             ),

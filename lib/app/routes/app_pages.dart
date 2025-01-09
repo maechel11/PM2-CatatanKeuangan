@@ -16,6 +16,8 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/reset_password/bindings/reset_password_binding.dart';
+import '../modules/reset_password/views/reset_password_view.dart';
 import '../modules/ubah_profile/bindings/ubah_profile_binding.dart';
 import '../modules/ubah_profile/views/ubah_profile_view.dart';
 
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.HUBUNGI_LAYANAN,
       page: () => const HubungiLayananView(),
       binding: HubungiLayananBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PASSWORD,
+      page: () => ResetPasswordView(),
+      binding: ResetPasswordBinding(),
     ),
   ];
 }

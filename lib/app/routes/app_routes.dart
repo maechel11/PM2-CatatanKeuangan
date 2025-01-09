@@ -12,6 +12,7 @@ abstract class Routes {
   static const CARA_MENGGUNAKAN = _Paths.CARA_MENGGUNAKAN;
   static const ATUR_ULANG_KATA_SANDI = _Paths.ATUR_ULANG_KATA_SANDI;
   static const HUBUNGI_LAYANAN = _Paths.HUBUNGI_LAYANAN;
+  static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const CARA_MENGGUNAKAN = '/cara-menggunakan';
   static const ATUR_ULANG_KATA_SANDI = '/atur-ulang-kata-sandi';
   static const HUBUNGI_LAYANAN = '/hubungi-layanan';
+  static const RESET_PASSWORD = '/reset-password';
 }
