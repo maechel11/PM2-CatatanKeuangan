@@ -9,9 +9,11 @@ class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 251, 218),
       appBar: AppBar(
         title: const Text('DAFTAR'),
         centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 255, 251, 218),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
@@ -112,26 +114,39 @@ class RegisterView extends GetView<RegisterController> {
               ),
             ),
             const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                if (controller.cPassword.text !=
-                    controller.cConfirmPassword.text) {
-                  Get.snackbar(
-                    'Error',
-                    'Password dan Konfirmasi Password tidak sama',
-                    backgroundColor: Colors.red,
-                    colorText: Colors.white,
-                  );
-                  return;
-                }
-                cAuth.register(
-                  controller.cEmail.text,
-                  controller.cPassword.text,
-                  username: controller.cUsername.text,
-                );
-              },
-              child: const Text('Daftar'),
-            ),
+            Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: double.infinity, // Menjamin tombol mengisi seluruh lebar
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (controller.cPassword.text != controller.cConfirmPassword.text) {
+                      Get.snackbar(
+                        'Error',
+                        'Password dan Konfirmasi Password tidak sama',
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white,
+                      );
+                      return;
+                    }
+                    cAuth.register(
+                      controller.cEmail.text,
+                      controller.cPassword.text,
+                      username: controller.cUsername.text,
+                    );
+                  },
+                  child: const Text('Daftar'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 237, 148, 85),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
