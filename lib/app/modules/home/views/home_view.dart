@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myapp/app/modules/home/views/home_add_view';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -137,7 +138,7 @@ class HomeView extends GetView<HomeController> {
                                     alignment: Alignment.bottomRight,
                                     child: FloatingActionButton(
                                       onPressed: () {
-                                        // Handle add button press
+                                        Get.to(HomeAddView());
                                       },
                                       child: Icon(
                                         Icons.add,

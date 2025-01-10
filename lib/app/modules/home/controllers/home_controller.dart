@@ -1,8 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
+  late TextEditingController cCatatan;
+  late TextEditingController cJenis;
+  late TextEditingController cNominal;
+  late TextEditingController cTanggal;
+
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<QuerySnapshot<Object?>> GetData() async {
@@ -13,6 +19,39 @@ class HomeController extends GetxController {
   Stream<QuerySnapshot<Object?>> StreamData() {
     CollectionReference keuangan = firestore.collection('keuangan');
     return keuangan.snapshots();
+  }
+
+  //tambah data
+  void add(String catatan, String jenis, num nominal, Timestamp tanggal) async {
+    CollectionReference keuangan = firestore.collection("keuangan");
+
+    try {
+      await keuangan.add({
+        "catatan": catatan,
+        "jenis": jenis,
+        "nominal": nominal,
+        "tanggal": tanggal,
+      });
+      Get.defaultDialog(
+          title: "Berhasil",
+          middleText: "Berhasil menyimpan catatan",
+          onConfirm: () {
+            cCatatan.clear();
+            cJenis.clear();
+            cNominal.clear();
+            cTanggal.clear();
+            Get.back();
+            Get.back();
+            textConfirm:
+            "OK";
+          });
+    } catch (e) {
+      print(e);
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan",
+        middleText: "Gagal Menambahkan dosen.",
+      );
+    }
   }
 
   // Menggunakan RxString agar bisa reaktif dan update UI ketika berubah

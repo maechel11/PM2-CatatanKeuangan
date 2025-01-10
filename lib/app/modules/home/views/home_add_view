@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:myapp/app/modules/dosen/controllers/dosen_controller.dart';
+
+class HomeAddView extends GetView<HomeController> {
+  const HomeAddView({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Tambah catatan'),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(8),
+        child: Column(
+          children: [
+            TextField(
+              controller: controller.cCatatan,
+              autocorrect: false,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(labelText: "Catatan"),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextField(
+              controller: controller.cJenis,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(labelText: "Jenis"),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextField(
+              controller: controller.cNominal,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(labelText: "Nominal"),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            TextField(
+              controller: controller.cTanggal,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(labelText: "Tanggal"),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            ElevatedButton(
+              onPressed: () => controller.add(
+                controller.cNidn.text,
+                controller.cJenis.text,
+                controller.cNominal.text,
+                controller.cTanggal.text,
+              ),
+              child: Text("Simpan"),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
