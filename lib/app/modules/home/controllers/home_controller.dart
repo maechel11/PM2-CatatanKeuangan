@@ -23,33 +23,39 @@ class HomeController extends GetxController {
 
   //tambah data
   void add(String catatan, String jenis, num nominal, Timestamp tanggal) async {
+    // Mendapatkan referensi koleksi di Firestore
     CollectionReference keuangan = firestore.collection("keuangan");
 
     try {
+      // Menambahkan data ke Firestore
       await keuangan.add({
-        "catatan": catatan,
-        "jenis": jenis,
+        "catatan": catatan.trim(), // Hilangkan spasi berlebih
+        "jenis": jenis.trim(),
         "nominal": nominal,
         "tanggal": tanggal,
       });
+
+      // Menampilkan dialog sukses
       Get.defaultDialog(
-          title: "Berhasil",
-          middleText: "Berhasil menyimpan catatan",
-          onConfirm: () {
-            cCatatan.clear();
-            cJenis.clear();
-            cNominal.clear();
-            cTanggal.clear();
-            Get.back();
-            Get.back();
-            textConfirm:
-            "OK";
-          });
+        title: "Berhasil",
+        middleText: "Berhasil menyimpan catatan",
+        textConfirm: "OK",
+        onConfirm: () {
+          // Membersihkan form
+          cCatatan.clear();
+          cJenis.clear();
+          cNominal.clear();
+          cTanggal.clear();
+          Get.back(); // Menutup dialog
+          Get.back(); // Kembali ke halaman sebelumnya
+        },
+      );
     } catch (e) {
-      print(e);
+      // Menangani kesalahan
+      print(e); // Debugging kesalahan
       Get.defaultDialog(
         title: "Terjadi Kesalahan",
-        middleText: "Gagal Menambahkan dosen.",
+        middleText: "Gagal menyimpan catatan: $e",
       );
     }
   }
@@ -59,8 +65,21 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    cCatatan = TextEditingController();
+    cJenis = TextEditingController();
+    cNominal = TextEditingController();
+    cTanggal = TextEditingController();
     super.onInit();
     _fetchUserData(); // Ambil data pengguna saat controller diinisialisasi
+  }
+
+  @override
+  void onClose() {
+    cCatatan.dispose();
+    cJenis.dispose();
+    cNominal.dispose();
+    cTanggal.dispose();
+    super.onClose();
   }
 
   Future<void> _fetchUserData() async {
