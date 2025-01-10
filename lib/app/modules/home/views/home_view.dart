@@ -1,5 +1,4 @@
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:4223307933.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:1744329656.
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
@@ -10,29 +9,29 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Color.fromARGB(255, 255, 251, 218), // Changed background color
+      backgroundColor: Color.fromARGB(255, 255, 251, 218),
       appBar: AppBar(
         toolbarHeight: 80,
         backgroundColor: const Color.fromARGB(255, 255, 251, 218),
-        elevation: 5, // Add shadow
+        elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20), // Add circular border
+            bottom: Radius.circular(20),
           ),
         ),
         shadowColor: const Color.fromARGB(255, 0, 0, 0).withOpacity(1),
-
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                  Obx(() => Text(
-                  controller.username.isEmpty ? 'Loading...' : controller.username.value,
-                  style: TextStyle(color: Colors.black, fontSize: 20),
-                )),
+                Obx(() => Text(
+                      controller.username.isEmpty
+                          ? 'Loading...'
+                          : controller.username.value,
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    )),
                 Text(
                   'CekSAKU',
                   style: TextStyle(
@@ -71,7 +70,6 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Filter Bulan
               Align(
                 alignment: Alignment.centerRight,
                 child: ElevatedButton.icon(
@@ -91,67 +89,121 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
               ),
-              SizedBox(height: 1.0), // Add spacing between filter and list
-
-              // Container for List of Transactions and Add button
+              SizedBox(height: 1.0),
               Expanded(
-                child: ListView.builder(
-                  itemCount: 6, // Increased item count by 1 for add button
-                  itemBuilder: (context, index) {
-                    if (index == 5) {
-                      // Last item is the add button
-                      return Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Align(
-                          alignment: Alignment.bottomRight,
-                          child: FloatingActionButton(
-                            onPressed: () {
-                              // Handle add button press
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: controller.StreamData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.hasError) {
+                      return Center(child: Text("Error: ${snapshot.error}"));
+                    }
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return Center(child: Text("Belum ada transaksi"));
+                    }
+
+                    final transactions = snapshot.data!.docs;
+
+                    // Hitung total pemasukan dan pengeluaran
+                    double totalPemasukan = 0;
+                    double totalPengeluaran = 0;
+
+                    for (var transaction in transactions) {
+                      if (transaction['nominal'] is num &&
+                          transaction['jenis'] is String) {
+                        if (transaction['jenis'] == 'pemasukan') {
+                          totalPemasukan += transaction['nominal'];
+                        } else if (transaction['jenis'] == 'pengeluaran') {
+                          totalPengeluaran += transaction['nominal'];
+                        }
+                      } else {
+                        print("");
+                      }
+                    }
+
+                    return Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount:
+                                transactions.length + 1, // Include add button
+                            itemBuilder: (context, index) {
+                              if (index == transactions.length) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: FloatingActionButton(
+                                      onPressed: () {
+                                        // Handle add button press
+                                      },
+                                      child: Icon(
+                                        Icons.add,
+                                        color:
+                                            const Color.fromARGB(255, 0, 0, 0),
+                                      ),
+                                      backgroundColor: Colors.orange,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                final transaction = transactions[index];
+                                final nominal = transaction['nominal'];
+                                final catatan = transaction['catatan'];
+                                final jenis = transaction['jenis'];
+                                final tanggal =
+                                    (transaction['tanggal'] as Timestamp)
+                                        .toDate();
+
+                                return TransactionCard(
+                                  nominal: nominal.toString(),
+                                  catatan: catatan,
+                                  tanggal: tanggal,
+                                  jenis: jenis,
+                                );
+                              }
                             },
-                            child: Icon(
-                              Icons.add,
-                              color: const Color.fromARGB(
-                                  255, 0, 0, 0), // Changed icon color
-                            ),
-                            backgroundColor:
-                                Colors.orange, // Changed button color
                           ),
                         ),
-                      );
-                    } else {
-                      return TransactionCard(index: index);
-                    }
-                  },
-                ),
-              ),
-
-              // Total Section
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.yellow.shade100,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Rp.xxx.xxx.xxx',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    Divider(color: Colors.black),
-                    Text('Total',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Pengeluaran:'),
-                        Text('Pemasukan:'),
+                        Container(
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.yellow.shade100,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Divider(color: Colors.black),
+                              Text('Total',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Pengeluaran:'),
+                                  Text(
+                                      'Rp. ${totalPengeluaran.toStringAsFixed(0)}'),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Pemasukan:'),
+                                  Text(
+                                      'Rp. ${totalPemasukan.toStringAsFixed(0)}'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ),
             ],
@@ -163,11 +215,19 @@ class HomeView extends GetView<HomeController> {
 }
 
 class TransactionCard extends StatelessWidget {
-  final int index;
+  final String nominal;
+  final String catatan;
+  final DateTime tanggal;
+  final String jenis;
 
-  const TransactionCard({Key? key, required this.index}) : super(key: key);
+  const TransactionCard({
+    Key? key,
+    required this.nominal,
+    required this.catatan,
+    required this.tanggal,
+    required this.jenis,
+  }) : super(key: key);
 
-//buat kotak catatan
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -180,12 +240,12 @@ class TransactionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Rp.xx.xxx.xxx',
+              'Rp.$nominal',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 4),
             Text(
-              'Catatan xxxxxxxxxxxxxxxxxxxxx',
+              catatan,
               style: TextStyle(fontSize: 14, color: Colors.black54),
             ),
             SizedBox(height: 4),
@@ -193,17 +253,17 @@ class TransactionCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '26 Feb 2024 - 20.24',
+                  '${tanggal.day}-${tanggal.month}-${tanggal.year}',
                   style: TextStyle(fontSize: 12, color: Colors.black54),
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: index.isEven ? Colors.orange : Colors.red,
+                    color: jenis == 'Pemasukan' ? Colors.orange : Colors.red,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    index.isEven ? 'Pemasukan' : 'Pengeluaran',
+                    jenis,
                     style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                 ),

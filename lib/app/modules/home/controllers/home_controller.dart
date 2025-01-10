@@ -3,6 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Future<QuerySnapshot<Object?>> GetData() async {
+    CollectionReference keuangan = firestore.collection('keuangan');
+    return keuangan.get();
+  }
+
+  Stream<QuerySnapshot<Object?>> StreamData() {
+    CollectionReference keuangan = firestore.collection('keuangan');
+    return keuangan.snapshots();
+  }
+
   // Menggunakan RxString agar bisa reaktif dan update UI ketika berubah
   var username = ''.obs; // Username reaktif
 
