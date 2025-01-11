@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/about/bindings/about_binding.dart';
+import '../modules/about/views/about_view.dart';
 import '../modules/atur_ulang_kata_sandi/bindings/atur_ulang_kata_sandi_binding.dart';
 import '../modules/atur_ulang_kata_sandi/views/atur_ulang_kata_sandi_view.dart';
 import '../modules/bantuan/bindings/bantuan_binding.dart';
@@ -78,6 +80,18 @@ class AppPages {
       name: _Paths.RESET_PASSWORD,
       page: () => ResetPasswordView(),
       binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.ABOUT,
+      page: () => const AboutView(),
+      binding: AboutBinding(),
+      children: [
+        GetPage(
+          name: _Paths.ABOUT,
+          page: () => const AboutView(),
+          binding: AboutBinding(),
+        ),
+      ],
     ),
   ];
 }

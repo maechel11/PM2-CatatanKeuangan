@@ -13,6 +13,7 @@ abstract class Routes {
   static const ATUR_ULANG_KATA_SANDI = _Paths.ATUR_ULANG_KATA_SANDI;
   static const HUBUNGI_LAYANAN = _Paths.HUBUNGI_LAYANAN;
   static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
+  static const ABOUT = _Paths.ABOUT;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const ATUR_ULANG_KATA_SANDI = '/atur-ulang-kata-sandi';
   static const HUBUNGI_LAYANAN = '/hubungi-layanan';
   static const RESET_PASSWORD = '/reset-password';
+  static const ABOUT = '/about';
 }
