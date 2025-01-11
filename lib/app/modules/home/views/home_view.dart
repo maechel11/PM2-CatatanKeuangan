@@ -71,25 +71,7 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    // Handle button press here
-                  },
-                  icon: Icon(Icons.filter_list, color: Colors.black),
-                  label: Text(
-                    "Pilih Bulan",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-              ),
+              
               SizedBox(height: 1.0),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
