@@ -85,13 +85,6 @@ class AppPages {
       name: _Paths.ABOUT,
       page: () => const AboutView(),
       binding: AboutBinding(),
-      children: [
-        GetPage(
-          name: _Paths.ABOUT,
-          page: () => const AboutView(),
-          binding: AboutBinding(),
-        ),
-      ],
     ),
   ];
 }
