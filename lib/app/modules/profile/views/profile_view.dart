@@ -2,6 +2,7 @@
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:3617287351.
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myapp/app/modules/about/views/about_view.dart';
 
 import '../controllers/profile_controller.dart';
 
@@ -99,6 +100,7 @@ class ProfileView extends GetView<ProfileController> {
                       title: const Text('Tentang kami'),
                       onTap: () {
                         // Implementasi navigasi ke halaman Tentang Kami
+                        Get.to(AboutView());
                       },
                     ),
                     const Divider(),
