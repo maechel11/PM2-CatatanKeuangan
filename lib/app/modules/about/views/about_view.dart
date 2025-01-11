@@ -10,6 +10,11 @@ class AboutView extends GetView<AboutController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Tentang Aplikasi'),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 237, 148, 85),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
