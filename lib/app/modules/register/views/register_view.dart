@@ -9,150 +9,180 @@ class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 251, 218),
-      appBar: AppBar(
-        title: const Text('DAFTAR',style: TextStyle(
-        fontWeight: FontWeight.bold, 
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 237, 148, 85),
+              Color.fromARGB(255, 255, 251, 218),
+            ],
+          ),
         ),
-        ),
-        centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 255, 251, 218),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
-            Text(
-              'Email',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 8),
-            TextField(
-              controller: controller.cEmail,
-              decoration: InputDecoration(
-                filled: true, 
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+            AppBar(
+              title: const Text(
+                'DAFTAR',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
-                labelText: "Email",
               ),
+              centerTitle: true,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              iconTheme: IconThemeData(color: Colors.black),
             ),
-            const SizedBox(height: 20),
-            Text(
-              'Username',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 8),
-            TextField(
-              controller: controller.cUsername,
-              decoration: InputDecoration(
-                filled: true, 
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                labelText: "Username",
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Password',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 8),
-            Obx(
-              () => TextField(
-              controller: controller.cPassword,
-              obscureText: controller.isPasswordHidden.value,
-              decoration: InputDecoration(
-                  filled: true, 
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  labelText: "Masukkan Password",
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      controller.isPasswordHidden.value
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      offset: Offset(0, -5),
                     ),
-                    onPressed: () {
-                      controller.isPasswordHidden.toggle();
-                    },
-                  ),
+                  ],
                 ),
-            ),),
-            const SizedBox(height: 20),
-            Text(
-              'Konfirmasi Password',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 8),
-            Obx(
-              () => TextField(
-                controller: controller.cConfirmPassword,
-                obscureText: controller.isPasswordHidden.value,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  labelText: "Konfirmasi Password",
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      controller.isPasswordHidden.value
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                    ),
-                    onPressed: () {
-                      controller.isPasswordHidden.toggle();
-                    },
+                padding: const EdgeInsets.all(20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 20),
+                      _buildInputField(
+                        label: 'Email',
+                        controller: controller.cEmail,
+                        hint: 'Masukkan Email',
+                      ),
+                      const SizedBox(height: 20),
+                      _buildInputField(
+                        label: 'Username',
+                        controller: controller.cUsername,
+                        hint: 'Masukkan Username',
+                      ),
+                      const SizedBox(height: 20),
+                      Obx(() => _buildPasswordField(
+                            label: 'Password',
+                            controller: controller.cPassword,
+                            isHidden: controller.isPasswordHidden.value,
+                            toggleVisibility: () => controller.isPasswordHidden.toggle(),
+                          )),
+                      const SizedBox(height: 20),
+                      Obx(() => _buildPasswordField(
+                            label: 'Konfirmasi Password',
+                            controller: controller.cConfirmPassword,
+                            isHidden: controller.isPasswordHidden.value,
+                            toggleVisibility: () => controller.isPasswordHidden.toggle(),
+                          )),
+                      const SizedBox(height: 30),
+                      Align(
+                        alignment: Alignment.center,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (controller.cPassword.text != controller.cConfirmPassword.text) {
+                              Get.snackbar(
+                                'Error',
+                                'Password dan Konfirmasi Password tidak sama',
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white,
+                              );
+                              return;
+                            }
+                            cAuth.register(
+                              controller.cEmail.text,
+                              controller.cPassword.text,
+                              username: controller.cUsername.text,
+                            );
+                          },
+                          child: const Text(
+                            'DAFTAR',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(double.infinity, 50),
+                            backgroundColor: Color.fromARGB(255, 237, 148, 85),
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 30),
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: double.infinity, // Menjamin tombol mengisi seluruh lebar
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (controller.cPassword.text != controller.cConfirmPassword.text) {
-                      Get.snackbar(
-                        'Error',
-                        'Password dan Konfirmasi Password tidak sama',
-                        backgroundColor: Colors.red,
-                        colorText: Colors.white,
-                      );
-                      return;
-                    }
-                    cAuth.register(
-                      controller.cEmail.text,
-                      controller.cPassword.text,
-                      username: controller.cUsername.text,
-                    );
-                  },
-                  child: const Text('Daftar'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 237, 148, 85),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-                  ),
-                ),
-              ),
-            )
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildInputField({
+    required String label,
+    required TextEditingController controller,
+    required String hint,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.grey[100],
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            labelText: hint,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPasswordField({
+    required String label,
+    required TextEditingController controller,
+    required bool isHidden,
+    required VoidCallback toggleVisibility,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: controller,
+          obscureText: isHidden,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.grey[100],
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            labelText: "Masukkan $label",
+            suffixIcon: IconButton(
+              icon: Icon(isHidden ? Icons.visibility : Icons.visibility_off),
+              onPressed: toggleVisibility,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
