@@ -14,47 +14,82 @@ class HomeAddView extends GetView<HomeController> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             TextField(
               controller: controller.cCatatan,
               autocorrect: false,
               textInputAction: TextInputAction.next,
-              decoration: InputDecoration(labelText: "Catatan"),
+              decoration: const InputDecoration(labelText: "Catatan"),
             ),
-            SizedBox(height: 10),
-            TextField(
-              controller: controller.cJenis,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                labelText: "Jenis (Pemasukan / Pengeluaran)",
-              ),
-            ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
+            Obx(() {
+              return DropdownButtonFormField<String>(
+                value: controller.selectedJenis.value.isEmpty
+                    ? null
+                    : controller.selectedJenis.value,
+                onChanged: (value) {
+                  controller.selectedJenis.value = value ?? '';
+                },
+                decoration: const InputDecoration(
+                  labelText: "Jenis",
+                ),
+                items: const [
+                  DropdownMenuItem(
+                    value: "pemasukan",
+                    child: Text("Pemasukan"),
+                  ),
+                  DropdownMenuItem(
+                    value: "pengeluaran",
+                    child: Text("Pengeluaran"),
+                  ),
+                ],
+              );
+            }),
+            const SizedBox(height: 10),
             TextField(
               controller: controller.cNominal,
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.next,
-              decoration: InputDecoration(labelText: "Nominal (angka)"),
+              decoration: const InputDecoration(labelText: "Nominal (angka)"),
             ),
-            SizedBox(height: 10),
-            TextField(
-              controller: controller.cTanggal,
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.datetime,
-              decoration: InputDecoration(labelText: "Tanggal (YYYY-MM-DD)"),
-            ),
-            SizedBox(height: 30),
+            const SizedBox(height: 10),
+            Obx(() {
+              return TextField(
+                readOnly: true,
+                controller: TextEditingController(
+                  text: controller.selectedTanggal.value,
+                ),
+                decoration: const InputDecoration(
+                  labelText: "Tanggal (YYYY-MM-DD)",
+                ),
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (pickedDate != null) {
+                    controller.selectedTanggal.value =
+                        pickedDate.toIso8601String().split('T')[0];
+                  }
+                },
+              );
+            }),
+            const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 final nominal = double.tryParse(controller.cNominal.text);
-                final tanggal = DateTime.tryParse(controller.cTanggal.text);
+                final tanggal = DateTime.tryParse(controller.selectedTanggal.value);
 
-                if (nominal == null || tanggal == null) {
+                if (controller.selectedJenis.value.isEmpty ||
+                    nominal == null ||
+                    tanggal == null) {
                   Get.snackbar(
                     "Input tidak valid",
-                    "Pastikan nominal adalah angka dan tanggal memiliki format yang benar (YYYY-MM-DD).",
+                    "Pastikan semua field terisi dengan benar.",
                     snackPosition: SnackPosition.BOTTOM,
                   );
                   return;
@@ -62,13 +97,13 @@ class HomeAddView extends GetView<HomeController> {
 
                 controller.add(
                   controller.cCatatan.text,
-                  controller.cJenis.text,
+                  controller.selectedJenis.value,
                   nominal,
                   Timestamp.fromDate(tanggal),
                 );
               },
-              child: Text("Simpan"),
-            )
+              child: const Text("Simpan"),
+            ),
           ],
         ),
       ),

@@ -7,7 +7,10 @@ class HomeController extends GetxController {
   late TextEditingController cCatatan;
   late TextEditingController cJenis;
   late TextEditingController cNominal;
-  late TextEditingController cTanggal;
+
+    // Properti reaktif
+  var selectedJenis = ''.obs;
+  var selectedTanggal = ''.obs;
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -22,37 +25,31 @@ class HomeController extends GetxController {
   }
 
   //tambah data
-  void add(String catatan, String jenis, num nominal, Timestamp tanggal) async {
-    // Mendapatkan referensi koleksi di Firestore
+ void add(String catatan, String jenis, num nominal, Timestamp tanggal) async {
     CollectionReference keuangan = firestore.collection("keuangan");
 
     try {
-      // Menambahkan data ke Firestore
       await keuangan.add({
-        "catatan": catatan.trim(), // Hilangkan spasi berlebih
+        "catatan": catatan.trim(),
         "jenis": jenis.trim(),
         "nominal": nominal,
         "tanggal": tanggal,
       });
 
-      // Menampilkan dialog sukses
       Get.defaultDialog(
         title: "Berhasil",
         middleText: "Berhasil menyimpan catatan",
         textConfirm: "OK",
         onConfirm: () {
-          // Membersihkan form
           cCatatan.clear();
-          cJenis.clear();
+          selectedJenis.value = '';
           cNominal.clear();
-          cTanggal.clear();
-          Get.back(); // Menutup dialog
+          selectedTanggal.value = '';
+          Get.back(); // Tutup dialog
           Get.back(); // Kembali ke halaman sebelumnya
         },
       );
     } catch (e) {
-      // Menangani kesalahan
-      print(e); // Debugging kesalahan
       Get.defaultDialog(
         title: "Terjadi Kesalahan",
         middleText: "Gagal menyimpan catatan: $e",
@@ -68,7 +65,6 @@ class HomeController extends GetxController {
     cCatatan = TextEditingController();
     cJenis = TextEditingController();
     cNominal = TextEditingController();
-    cTanggal = TextEditingController();
     super.onInit();
     _fetchUserData(); // Ambil data pengguna saat controller diinisialisasi
   }
@@ -78,7 +74,6 @@ class HomeController extends GetxController {
     cCatatan.dispose();
     cJenis.dispose();
     cNominal.dispose();
-    cTanggal.dispose();
     super.onClose();
   }
 
