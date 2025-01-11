@@ -30,7 +30,7 @@ class LoginView extends GetView<LoginController> {
               height: 20,
             ),
             Image.asset(
-              "assets/logo.png",
+              "assets/logo.jpeg",
               height: 100,
             ),
             SizedBox(
